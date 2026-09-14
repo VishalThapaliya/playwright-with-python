@@ -1,8 +1,16 @@
-from playwright.sync_api import sync_playwright
+import re
+from playwright.sync_api import Page, expect
+url = "https://playwright.dev/"
 
-with sync_playwright() as p:
-    browser = p.chromium.launch(headless=False)
-    page = browser.new_page()
-    page.goto("https://playwright.dev/python/")
+def test_playwright_homepage(page: Page):
+    page.goto(url)
+
+    expect(page).to_have_title(re.compile("Playwright"))
     print("Page title: ", page.title())
-    browser.close()
+
+def test_get_started_link(page: Page):
+    page.goto(url)
+
+    page.get_by_role("link", name = "Get started").click()
+
+    expect(page.get_by_role("heading", name = "Installation")).to_be_visible()

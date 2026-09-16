@@ -1,3 +1,4 @@
+from playwright.sync_api import sync_playwright
 
 def test_user_api_get(playwright):
     request = playwright.request.new_context()
@@ -8,11 +9,14 @@ def test_user_api_get(playwright):
 
     assert data["id"] == 1
     assert data["username"] == "Bret"
+
     print(data["id"])
     print(data["username"])
 
-    print("Test completed successfully!!!")
     response.dispose()
+    request.dispose()
+
+    print("Test completed successfully!!!")
 
 def test_users_api_get_with_headers(playwright):
     request = playwright.request.new_context(
@@ -21,13 +25,16 @@ def test_users_api_get_with_headers(playwright):
             "User-Agent": "playwright-python-automation/1.0"
         }
     )
+
     response = request.get("https://jsonplaceholder.typicode.com/users")
 
     assert response.status == 200
     assert response.headers["content-type"].startswith("application/json")
+
     users = response.json()
 
     assert len(users) == 10
+
     print(users)
 
     # assert res_data["data"][2]["first_name"] == "Emma"
@@ -37,4 +44,6 @@ def test_users_api_get_with_headers(playwright):
     # print(res_data["data"][3]["email"])
 
     response.dispose()
+    request.dispose()
+    
     print("Test completed successfully")

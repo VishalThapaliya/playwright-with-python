@@ -1,12 +1,4 @@
 [
-    // {
-    //     "username": "Test1",
-    //     "password": "password789"
-    // },
-    // {
-    //     "username": "Test2",
-    //     "password": "password456"
-    // },
     {
         "username": "Admin",
         "password": "admin123"
